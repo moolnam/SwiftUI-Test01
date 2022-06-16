@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		78288DC9285B358D001F08E8 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78288DC8285B358D001F08E8 /* AudioPlayer.swift */; };
 		7873BC732859C1BD00DA6F3D /* SwiftUI_Test01App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7873BC722859C1BD00DA6F3D /* SwiftUI_Test01App.swift */; };
 		7873BC752859C1BD00DA6F3D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7873BC742859C1BD00DA6F3D /* ContentView.swift */; };
 		7873BC772859C1BE00DA6F3D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7873BC762859C1BE00DA6F3D /* Assets.xcassets */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		78288DC8285B358D001F08E8 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		7873BC6F2859C1BD00DA6F3D /* SwiftUI-Test01.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SwiftUI-Test01.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7873BC722859C1BD00DA6F3D /* SwiftUI_Test01App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUI_Test01App.swift; sourceTree = "<group>"; };
 		7873BC742859C1BD00DA6F3D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				7873BC952859F04D00DA6F3D /* CircleGroupView.swift */,
+				78288DC8285B358D001F08E8 /* AudioPlayer.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -207,6 +210,7 @@
 				7873BC892859CAE200DA6F3D /* ComicData.swift in Sources */,
 				7873BC852859C41F00DA6F3D /* UserManager.swift in Sources */,
 				7873BC932859DC2400DA6F3D /* HomeView.swift in Sources */,
+				78288DC9285B358D001F08E8 /* AudioPlayer.swift in Sources */,
 				7873BC732859C1BD00DA6F3D /* SwiftUI_Test01App.swift in Sources */,
 				7873BC912859DC0200DA6F3D /* OnboardingView.swift in Sources */,
 			);

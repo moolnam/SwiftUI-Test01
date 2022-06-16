@@ -15,6 +15,10 @@ struct OnboardingView: View {
     @State private var buttonOffset: CGFloat = 0
     @State private var isAnimating: Bool = false
     @State private var imageOffset: CGSize = .zero
+    @State private var arrowOpacity: Double = 1.0
+    @State private var textChage: String = "Share"
+    
+    let hapticFeadback = UINotificationFeedbackGenerator()
     
     var body: some View {
         ZStack {
@@ -25,11 +29,11 @@ struct OnboardingView: View {
             VStack {
                 
                 VStack {
-                    
-                    Text("Share")
+                    Text(textChage)
                         .font(.system(size: 60))
                         .font(.largeTitle)
                         .fontWeight(.bold)
+                        .id(textChage)
                     Text("""
                     나의 사랑을 받아랏!
                     나의 사랑을 받아랏!
@@ -44,6 +48,10 @@ struct OnboardingView: View {
                 
                 ZStack {
                     CircleGroupView(shapeColor: .white, shapeOpacity: 0.5)
+                        .offset(x: imageOffset.width * -0.5)
+                        .blur(radius: abs(imageOffset.width / 30))
+                        .animation(.spring(response: 0.7, dampingFraction: 0.1, blendDuration: 0.1), value: imageOffset)
+                    
                     Image("character-1")
                         .resizable()
                         .scaledToFit()
@@ -51,18 +59,42 @@ struct OnboardingView: View {
                         .offset(x: isAnimating ? 0 : 40)
                         .offset(x: imageOffset.width * 1.2)
                         .animation(.easeOut(duration: 0.5), value: isAnimating)
+                        .rotationEffect(.degrees(Double(imageOffset.width / 20)))
                         .gesture(
                             DragGesture()
                                 .onChanged({ gesture in
                                     if abs(imageOffset.width) <= 180 {
                                         imageOffset = gesture.translation
+                                        withAnimation() {
+                                            arrowOpacity = 0
+                                            textChage = "Give"
+                                        }
+                                        
+                                    }
+                                    if abs(imageOffset.width) >= 170 {
+                                        self.isOnboardingViewActive = false
+                                        playSound(sound: "chimeup", type: "mp3")
                                     }
                                 })
                                 .onEnded({ gesture in
-                                    imageOffset.width = 0
+                                    imageOffset.width = .zero
+                                    withAnimation() {
+                                        arrowOpacity = 1
+                                        textChage = "Share"
+                                    }
                                 })
                         )
+                        .animation(.easeOut(duration: 0.3), value: imageOffset)
                 }
+                .overlay(
+                    Image(systemName: "person.and.arrow.left.and.arrow.right")
+                        .font(.system(size: 100))
+                        .foregroundColor(.white)
+                        .blur(radius: abs(imageOffset.width) / 40)
+                        .opacity(arrowOpacity)
+                    ,alignment: .bottom
+                )
+                
                 
                 ZStack {
                     Capsule()
@@ -108,10 +140,13 @@ struct OnboardingView: View {
                                 .onEnded({ gesture in
                                     withAnimation(.easeOut(duration: 0.3)) {
                                         if buttonOffset >= buttonWidth / 2 {
+                                            hapticFeadback.notificationOccurred(.success)
+                                            playSound(sound: "chimeup", type: "mp3")
                                             buttonOffset = buttonWidth - 100
                                             self.isOnboardingViewActive = false
                                         }
                                         else {
+                                            hapticFeadback.notificationOccurred(.warning)
                                             buttonOffset = 0
                                         }
                                     }
