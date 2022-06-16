@@ -11,6 +11,9 @@ struct HomeView: View {
     
     @AppStorage("onboarding") var isOnboardingViewActive: Bool = false
     
+    @State private var isAnimating: Bool = false
+    
+    
     var body: some View {
         ZStack {
             Color("Home Color")
@@ -25,6 +28,9 @@ struct HomeView: View {
                         Image("character-2")
                             .resizable()
                             .scaledToFit()
+                            .opacity(isAnimating ? 1 : 0)
+                            .offset(x: isAnimating ? 0 : 40)
+                            .animation(.easeIn(duration: 1), value: isAnimating)
                     }
                     Text("""
                     즐거운 명상 중.. 즐거운 명상 중..
@@ -32,11 +38,16 @@ struct HomeView: View {
                     """)
                     .multilineTextAlignment(.center)
                     .foregroundColor(.white)
+                    .opacity(isAnimating ? 1 : 0)
+                    .offset(y: isAnimating ? 0 : 40)
+                    .animation(.easeOut(duration: 0.5), value: isAnimating)
                     
                     Spacer()
                     
                     Button(action: {
-                        self.isOnboardingViewActive = true
+                        withAnimation {
+                            self.isOnboardingViewActive = true
+                        }
                     }, label: {
                         HStack {
                             Image(systemName: "repeat.circle")
@@ -47,6 +58,9 @@ struct HomeView: View {
                     })
                     .buttonStyle(.borderedProminent)
                     .controlSize(.large)
+                    .opacity(isAnimating ? 1 : 0)
+                    .offset(y: isAnimating ? 0 : 40)
+                    .animation(.easeIn(duration: 0.5), value: isAnimating)
                     
                     
 //                    Button(action: {
@@ -57,6 +71,11 @@ struct HomeView: View {
                 }
             }
         } // ZStack
+        .onAppear() {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                self.isAnimating = true
+            })
+        }
     }
 }
 
